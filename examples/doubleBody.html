@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    div {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    </style>
+  </head>
+  <body id="realBody">
+    <button id="writeAReview">write a review</button>
+  </body>
+  <script>
+  $(function () {
+    $('#writeAReview').on('click', function () {
+      $('body').append('<div>submission form</div>');
+    });
+  });
+
+  </script>
+  <script>
+  (function () {
+    var $b = $('<body/>');
+    $b.attr('id', 'fakeBody');
+    $b.insertAfter('#realBody');
+  })();
+  </script>
+</html>
