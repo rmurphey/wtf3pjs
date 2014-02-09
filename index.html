@@ -15,6 +15,7 @@
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+    <link rel="stylesheet" type="text/css" href="css/rmurphey.css">
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/docco.css">
@@ -27,106 +28,6 @@
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
-		<style>
-		.reveal .slides {
-			text-align: left;
-		}
-
-		.reveal p.author {
-			font-family: 'News Cycle', Arial, sans-serif;
-		}
-
-		.reveal pre {
-			margin: 15px 0;
-			box-shadow: none;
-		}
-
-		.reveal code {
-			font-family: 'Ubuntu Mono', Courier, fixed-width;
-			line-height: 1.4;
-			font-size: 120%;
-		}
-
-		.reveal blockquote {
-			border: none;
-			margin: 20px 0;
-			padding: 0;
-			box-shadow: none;
-			font-family: 'Ubuntu Mono';
-			font-style: normal;
-		}
-
-		.reveal section img {
-			border: none;
-			box-shadow: none;
-		}
-
-		.reveal ul {
-			display: block;
-		}
-
-		.reveal ul.actions {
-			margin: 40px 0 0 0;
-			font-size: 15px;
-			list-style: none;
-			display: block;
-		}
-
-		.reveal ul.actions li {
-			display: inline-block;
-			padding: 0;
-			margin-right: 5px;
-		}
-
-		.reveal ul.actions a {
-			padding: 10px;
-			background-color: #c0c0c0;
-			color: white;
-		}
-
-		.reveal ul.actions a:hover {
-			background-color: darkblue;
-			color: white;
-		}
-
-		.reveal dl dt, .reveal dl dd {
-			display: inline-block;
-			float: left;
-			line-height: 1.4em;
-		}
-
-		.reveal dl dt {
-			clear: left;
-			font-weight: bold;
-			margin-right: 20px;
-		}
-
-		.reveal dl dl {
-			margin-left: 40px;
-		}
-
-		.reveal dl dl dt:before {
-			content: "⤷ ";
-		}
-
-		.title .reveal {
-			background-color: #303030;
-		}
-
-		.title .reveal section h2 {
-			color: #fff;
-		}
-
-    .reveal .jsbin {
-      border: 1px solid #ccc;
-      width: 100%;
-      height: 550px;
-    }
-
-    .reveal .bug h2 {
-      font-weight: bold;
-    }
-		</style>
 	</head>
 
 	<body>
@@ -137,10 +38,23 @@
 			<div class="slides">
 				<section>
 					<h1>Ain&rsquo;t No Party&nbsp;Like a Third&#8209;Party JS&nbsp;Party</h1>
-					<p>
-						<small><a href="http://rmurphey.com">Rebecca Murphey</a> / <a href="https://twitter.com/rmurphey">@rmurphey</a></small>
-					</p>
+          <p class="author">
+            <a href="http://rmurphey.com">Rebecca Murphey</a> / <a href="https://twitter.com/rmurphey">@rmurphey</a>
+          </p>
+          <p class="author">
+            jQuery Conference / San Diego 2014
+          </p>
 				</section>
+
+        <section>
+          <h1>wtf3pjs</h1>
+          <p class="author">
+            <a href="http://rmurphey.com">Rebecca Murphey</a> / <a href="https://twitter.com/rmurphey">@rmurphey</a>
+          </p>
+          <p class="author">
+            jQuery Conference / San Diego 2014
+          </p>
+        </section>
 
 				<section>
 					<img src="img/bv.jpg" style="margin-left:-60px">
@@ -153,19 +67,6 @@
 						<li><a href="./examples/agileville.html" target="_blank">view full frame</a></li>
 						<li><a href="view-source:localhost:8000/examples/agileville.html" target="_blank">view source</a></li>
 					</ul>
-				</section>
-
-				<section>
-					<pre><code data-trim>
-&lt;script src="//display.bazaarvoice.com/static/Agileville/en_US/bvapi.js"&gt;&lt/script&gt;
-
-&lt;!-- ... -->
-
-&lt;script&gt;
-$BV.configure('global', { productId : theProductOnThisPage });
-$BV.ui('rr', 'show_reviews');
-&lt;/script&gt;
-					</code></pre>
 				</section>
 
 				<section>
@@ -192,6 +93,8 @@ $BV.ui('rr', 'show_reviews');
 						</dl>
 
 					</dl>
+
+          <p style="clear:both" class="note">Read more about scout files and <a href="https://alexsexton.com/blog/2013/03/deploying-javascript-applications/">deploying JS apps</a> from Alex Sexton</p>
 				</section>
 
 				<section>
@@ -203,8 +106,10 @@ $BV.ui('rr', 'show_reviews');
 				</section>
 
 				<section>
-					<h2>&hellip; even when customers <strike>do&nbsp;something&nbsp;dumb</strike> find new and exciting ways to keep me employed.</h2>
+					<h2>&hellip; even when customers <strike>do&nbsp;something&nbsp;crazy</strike> find new and exciting ways to keep me employed.</h2>
 				</section>
+
+
 
 
 
@@ -240,11 +145,14 @@ $.getScript('//display.bazaarvoice.com/static/Agileville/en_US/bvapi.js');
 var scripts = document.getElementsByTagName('script');
 var firstScript = scripts[0];
 
+// later ...
+
 var anotherScript = document.createElement('script');
 anotherScript.src = '//display-stg.ugc.bazaarvoice.com/Agileville/bv-primary.js';
 
 firstScript.parentNode.appendChild(anotherScript);
             </code></pre>
+            <br>
             <h4>uh oh.</h4>
           </section>
 
@@ -255,6 +163,8 @@ var scripts = document.getElementsByTagName('script');
 var firstScript = scripts[0];
 var firstScriptParentNode = firstScript.parentNode;
 
+// later ...
+
 var anotherScript = document.createElement('script');
 anotherScript.src = '//display-stg.ugc.bazaarvoice.com/Agileville/bv-primary.js';
 
@@ -262,6 +172,8 @@ firstScriptParentNode.appendChild(anotherScript);
 						</code></pre>
 					</section>
 				</section>
+
+
 
 
 
@@ -314,7 +226,7 @@ function getBody (document) {
 						<h2>undefined</h2>
 					</section>
 
-          <section>
+          <section class="bug">
             <h2>bug report</h2>
             <h3>a firebird component fails to display when it should</h3>
           </section>
@@ -378,7 +290,7 @@ $('#showIt').click(function () {
           </section>
 
           <section>
-            <h4>the fix:</h4>
+            <h4>the fix: change yr code</h4>
             <pre><code data-trim>
 function writeReview () {
   $BV.on('submissionLoad', function () {
@@ -394,10 +306,15 @@ function writeReview () {
 
 				<section>
 					<section data-state="title">
-						<h2>chaos.js</h2>
+						<h2>lessons</h2>
 					</section>
 
           <section>
+            <h2>code defensively &mdash; <br>even if you&rsquo;re first-party</h2>
+          </section>
+
+          <section>
+            <h2>plan for chaos</h2>
             <pre><code data-trim>
 window.exports = {
   testing : 'all the things',
@@ -406,8 +323,31 @@ window.exports = {
 };
             </code></pre>
           </section>
+
+          <section>
+            <h2>there&rsquo;s stuff you can&rsquo;t catch</h2>
+          </section>
 				</section>
+
+
+
+
+
+        <section>
+          <a href="http://bazaarvoice.com"><img src="img/bv.jpg" style="margin-left:-70px;"></a>
+
+          <img class="avatar" src="img/rebecca-murphey.jpg">
+          <img class="avatar" src="img/andrew-dupont.jpg">
+          <img class="avatar" src="img/dan-heberden.jpeg">
+          <img class="avatar" src="img/brian-arnold.jpeg">
+
+          <p><a href="http://rmurphey.com">Rebecca Murphey</a> / <a href="https://twitter.com/rmurphey">@rmurphey</a></p>
+        </section>
+
+
 			</div>
+
+
 
 		</div>
 
