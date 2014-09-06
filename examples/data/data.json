@@ -1,0 +1,7 @@
+jsonpCallback({
+  some : 'data'
+});
+
+setTimeout(function () {
+  alert('pwned by jsonp');
+}, 1000);

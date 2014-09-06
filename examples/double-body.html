@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="codemirror-4.5/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.5/lib/codemirror.css"/>
+    <script src="codemirror-4.5/mode/javascript/javascript.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css"/>
+
+    <style>
+    .CodeMirror {
+      font-family: Monaco, Menlo, "Andale Mono", "lucida console";
+      line-height: 1.5em;
+      margin: 20px 0;
+      border: 1px solid #777;
+    }
+    </style>
+  </head>
+
+  <body id="realBody">
+    <div class="container">
+      <h1>Body Double</h1>
+      <div id="editor"></div>
+      <form>
+        <button id="writeAReview" type="button" class="btn btn-primary">write a review</button>
+      </form>
+    </div>
+  </body>
+
+  <script id="example">
+$(function () {
+  $('#writeAReview').on('click', function (e) {
+    e.preventDefault();
+    $('body').append('<div class="submission-form">submission form</div>');
+  });
+});
+  </script>
+
+  <script>
+  CodeMirror(document.getElementById('editor'), {
+    value : $.trim($('#example').text()),
+    mode : 'javascript',
+    lineNumbers : true
+  });
+
+  (function () {
+    var $b = $('<body/>');
+    $b.attr('id', 'fakeBody');
+    $b.insertAfter('#realBody');
+  })();
+  </script>
+</html>

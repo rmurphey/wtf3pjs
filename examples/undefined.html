@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="codemirror-4.5/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.5/lib/codemirror.css"/>
+    <script src="codemirror-4.5/mode/javascript/javascript.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css"/>
+
+    <style>
+    .CodeMirror {
+      font-family: Monaco, Menlo, "Andale Mono", "lucida console";
+      line-height: 1.5em;
+      margin: 20px 0;
+      border: 1px solid #777;
+      height: auto;
+    }
+
+    .CodeMirror-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>#undefined</h1>
+      <div id="editor"></div>
+      <form>
+        <button id="with-config" type="button" class="btn btn-primary">showIt({ containerId : 'results' })</button>
+        <button id="without-config" type="button" class="btn btn-primary">showIt()</button>
+      </form>
+      <div id="results"></div>
+    </div>
+  </body>
+
+  <script id="example">
+function showIt (config) {
+  config = config || {};
+  var myDiv = $('#' + config.containerId);
+
+  if (myDiv.length) {
+    $('#results').append('<p>using configured div</p>');
+  } else {
+    $('#results').append('<p>using fallback div</p>');
+  }
+}
+  </script>
+
+  <script>
+  $('#with-config').on('click', function () {
+    showIt({ containerId : 'results' });
+  });
+
+  $('#without-config').on('click', function () {
+    showIt();
+  });
+
+  APP = {};
+
+  CodeMirror(document.getElementById('editor'), {
+    value : $.trim($('#example').text()),
+    mode : 'javascript',
+    lineNumbers : true
+  });
+
+  $.getScript('js/loader.js');
+  </script>
+</html>

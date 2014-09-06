@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="codemirror-4.5/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.5/lib/codemirror.css"/>
+    <script src="codemirror-4.5/mode/javascript/javascript.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css"/>
+
+    <style>
+    .CodeMirror {
+      font-family: Monaco, Menlo, "Andale Mono", "lucida console";
+      line-height: 1.5em;
+      margin: 20px 0;
+      border: 1px solid #777;
+      height: auto;
+    }
+
+    .CodeMirror-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>$.getScript().andDeleteIt()</h1>
+      <div id="editor"></div>
+      <form>
+        <button id="get-script" type="button" class="btn btn-primary">get script</button>
+      </form>
+      <div id="results">
+      </div>
+    </div>
+  </body>
+
+  <script id="example" type="text/example">
+// main page: get a third-party script, then use it
+var req = $.getScript('//wtf3pjs.com:8080/js/scout.js');
+req.done(function () { BV.doSomething(); });
+
+// the third-party script
+(function () {
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  var BV = window.BV = {};
+
+  BV.doSomething = function () {
+    console.log(firstScriptTag.parentNode);
+  };
+
+  BV.doSomething();
+}());
+  </script>
+
+  <script>
+  $('#get-script').on('click', function () {
+    var req = $.getScript('//wtf3pjs.com:8080/js/scout.js');
+    req.done(function () {
+      console.log('main page calling BV.doSomething')
+      BV.doSomething();
+    });
+  });
+
+  CodeMirror(document.getElementById('editor'), {
+    value : $.trim($('#example').text()),
+    mode : 'javascript',
+    lineNumbers : true
+  });
+  </script>
+</html>

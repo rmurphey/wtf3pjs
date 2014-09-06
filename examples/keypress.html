@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="codemirror-4.5/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="codemirror-4.5/lib/codemirror.css"/>
+    <script src="codemirror-4.5/mode/javascript/javascript.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.2.0-dist/css/bootstrap.min.css"/>
+
+    <style>
+    .CodeMirror {
+      font-family: Monaco, Menlo, "Andale Mono", "lucida console";
+      line-height: 1.5em;
+      margin: 20px 0;
+      border: 1px solid #777;
+      height: auto;
+    }
+
+    .CodeMirror-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    form, .popup {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      position: relative;
+      z-index: 2;
+      background-color: #fff;
+    }
+
+    .popup, .submission-form {
+      top: -100px;
+    }
+
+    .overlay {
+      background-color: #000;
+      opacity: 0.6;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>keypressn&rsquo;t</h1>
+      <div id="editor"></div>
+
+      <h3>Adam&rsquo;s Amazing Widget</h3>
+      <h4>$29.99</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <button id="showDetails" type="button" class="btn btn-primary" href="#">show details</button>
+
+      <script id="submissionForm" type="text/template">
+        <form class="submission-form" role="form">
+          <div class="form-group">
+            <label>My Review</label>
+            <textarea placeholder="type in me" class="form-control"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary">submit</button>
+        </form>
+      </script>
+
+      <script id="popup" type="text/template">
+        <div>
+          <div class="overlay"></div>
+          <div class="popup">
+            <h2>Adam&rsquo;s Amazing Widget</h2>
+            <p>It has bells. <em>And</em> whistles.</p>
+            <h4>Already bought it?</h4>
+            <button type="button" class="btn btn-primary" onclick="writeReview()">write a review</button>
+          </div>
+        </div>
+      </script>
+
+      <script>
+        var popup = $( $('#popup').html() );
+        var sf = $( $('#submissionForm').html() );
+        var showingPopup = false;
+      </script>
+    </div>
+  </body>
+
+  <script id="example">
+  var popup = $( $('#popup').html() );
+  var sf = $( $('#submissionForm').html() );
+  var showingPopup = false;
+
+  function togglePopup (e) {
+    if (showingPopup) {
+      $(this).html('> show details');
+      popup.detach();
+      $('body').off('keydown.insanity');
+    } else {
+      $(this).html('> hide details');
+      popup.appendTo('body');
+
+      $('body').on('keydown.insanity', function (e) {
+        if ( !$(e.target).closest('.popup').length ) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    }
+
+    showingPopup = !showingPopup;
+    e.preventDefault();
+  }
+
+  $('#showDetails').on('click', togglePopup);
+
+  function writeReview () {
+    if (!$('body .sf').length) {
+      $('.popup').hide();
+      sf.appendTo('body');
+    }
+  }
+  </script>
+</html>
+
+
+
