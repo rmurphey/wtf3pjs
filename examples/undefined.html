@@ -23,6 +23,12 @@
       overflow-x: auto;
       overflow-y: hidden;
     }
+
+    .dest {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+    }
     </style>
   </head>
 
@@ -31,29 +37,40 @@
       <h1>#undefined</h1>
       <div id="editor"></div>
       <form>
-        <button id="with-config" type="button" class="btn btn-primary">showIt({ containerId : 'results' })</button>
+        <button id="with-config" type="button" class="btn btn-primary">showIt({ containerId : 'configuredDiv' })</button>
         <button id="without-config" type="button" class="btn btn-primary">showIt()</button>
       </form>
-      <div id="results"></div>
+      <div id="defaultDiv" class="dest">
+        <h4>default div</h4>
+        <div></div>
+      </div>
+      <div id="configuredDiv" class="dest">
+        <h4>configured div</h4>
+        <div></div>
+      </div>
     </div>
   </body>
 
   <script id="example">
 function showIt (config) {
   config = config || {};
+
   var myDiv = $('#' + config.containerId);
+  var widget = '<p>bv widget</p>';
 
   if (myDiv.length) {
-    $('#results').append('<p>using configured div</p>');
+    myDiv.find('div').append(widget);
   } else {
-    $('#results').append('<p>using fallback div</p>');
+    $('#defaultDiv div').append(widget);
   }
+
+  console.log('done');
 }
   </script>
 
   <script>
   $('#with-config').on('click', function () {
-    showIt({ containerId : 'results' });
+    showIt({ containerId : 'configuredDiv' });
   });
 
   $('#without-config').on('click', function () {

@@ -32,9 +32,10 @@
       <h1>ZombieScripts®</h1>
       <div id="editor"></div>
       <form>
-        <button id="revivify" type="button" class="btn btn-primary">zombie script tags</button>
+        <button id="thirdParty" type="button" class="btn btn-primary">insert third-party content</button>
+        <button id="revivify" type="button" class="btn btn-primary">revivify</button>
       </form>
-      <div id="results">&lt;script&gt;alert("pwned");&lt;/script&gt;</div>
+      <div id="results"></div>
       <div></div>
     </div>
   </body>
@@ -48,6 +49,10 @@ $('body :not(iframe, script)').contents().filter(function () {
   </script>
 
   <script>
+  $('#thirdParty').on('click', function () {
+    $('#results').html('&lt;script&gt;alert("pwned");&lt;/script&gt;');
+  });
+
   $('#revivify').on('click', function () {
     $('body :not(iframe, script)').contents().filter(function () {
       return this.nodeType === 3;
